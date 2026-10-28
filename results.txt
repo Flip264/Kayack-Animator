@@ -1,0 +1,18 @@
+PASS Bezier linear endpoints and midpoint
+PASS Xmotion native poses match authored curve
+PASS Event Window once and repeating match native
+PASS Nested else with AND OR and status comparison
+PASS Branch abandons old action and starts destination at frame zero
+PASS Coincident events both execute
+PASS One added local variable and added Weapon3 clone registration
+PASS Left clothing uses left artwork and remains upright
+PASS Idle authored pose executes natively
+9 checks passed
+PASS Auto Flip mirrors cloth X and weapon Y in native export
+PASS Position motion preserves XVd and reaches target next tick
+PASS Layered sounds and voice export locally
+PASS Skill UI native payload supports ten coins and manual timing
+PASS P2 hit once, Fragile damage, native target id and grab release
+14 total checks passed
+PASS Authored Skill UI replaces old Hub display and keeps cooldowns
+15 total checks passed

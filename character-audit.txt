@@ -1,0 +1,9 @@
+Lucio PVP: structural export passed
+Ren PVP: Unresolved native helpers: HitboxSettings type %s sin %s Etc %s, Tween Base: %s X: %s Y: %s DIR: %s Speed: %s
+Sora PVP: Unresolved native helpers: UKey %s %s
+Albina PVP: Unresolved native helpers: UInt %s Key: %s To: %s, UKey %s %s, Slash %s, Tween Base: %s X: %s Y: %s DIR: %s Speed: %s, UInput %s Key: %s, Box %s %s, Udel %s %s, Shake %s %s
+Jeong PVP: structural export passed
+TingTang PVP: structural export passed
+Donquixote: not found by name
+Alyssa PVP: Unresolved native helpers: UInt %s Key: %s To: %s, UKey %s %s, Slash %s, Tween Base: %s X: %s Y: %s DIR: %s Speed: %s, UInput %s Key: %s, Box %s %s, Udel %s %s, HitboxSettings type %s sin %s Etc %s
+NoirManager PVP: structural export passed
