@@ -1,0 +1,12 @@
+# One status keyword per line. Import this file through Settings → Load keyword list.
+Burn
+Bleed
+Tremor
+Rupture
+Sinking
+Poise
+Charge
+Haste
+Bind
+Protection
+Fragile
