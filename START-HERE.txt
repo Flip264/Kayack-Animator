@@ -1,0 +1,30 @@
+NEW IN 0.6.12: lifetime color, random endpoint graphs, independent 3D particle/emitter orientation. Simplified costume editor removed. See CHANGES-0.6.12.md.
+
+NEW IN 0.6.11: per-keyframe VFX transforms, side preview sizing and stable fixed-mask direction. Read CHANGES-0.6.11.md.
+
+NEW IN 0.6.10: live VFX previews, fixed mask UV, SVG textures, costume editing and performance display. Read CHANGES-0.6.10.md first.
+
+NEW IN 0.6.9: refined VFX node graph, multi-point curves, mesh browser, camera controls and rotation fix. Read CHANGES-0.6.9.md first.
+
+NEW IN 0.6.8: click the top-bar VFX button. Read VFX-START-HERE.md for emitter authoring, shader graph and game export setup. This is a VFX authoring preview.
+
+KAYACK ANIMATOR 0.6.7
+
+Unzip the whole folder. Open index.html in a modern desktop browser.
+For GitHub Pages, upload the folder contents including the new duel.js,
+workspace.js and fix067.js. Refresh the page after deployment.
+
+Start with New character, or Open an existing sprite, game, character ZIP,
+or workspace ZIP. Your 0.6.6 saved workspace ZIP is supported.
+
+Open adds characters. Workspace lists, reorders and removes them.
+Save offers the current character or the whole workspace.
+Export (For Game) creates the same sprite ZIP format as before.
+Compact exports still use the included Kayack Motion 1.1 extension.
+
+Select objects, click a player/weapon, then drag the visible arrows or ring.
+Enable P2, select a workspace character, then use Play mode to control both.
+P1: WASD, Q, 1-5. P2: arrows, U, I O P K L. Change bindings in Settings.
+
+Settings > Language supports English and Korean.
+Read CHANGES-0.6.7.txt for changes, clash behavior and P2 compatibility limits.

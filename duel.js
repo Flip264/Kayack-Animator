@@ -1,0 +1,36 @@
+/* Two actors share one fixed-tick resolver. Rendering and input never run combat. */
+(function(root){'use strict';
+const clone=x=>JSON.parse(JSON.stringify(x)),n=x=>Number(x)||0,truth=x=>x===true||String(x).toLowerCase()==='true';
+const alive=(b,t)=>!b.dead&&t>=n(b.start)+n(b.delay)&&t<n(b.start)+n(b.delay)+n(b.lifetime)*60;
+const overlap=(a,b)=>Math.abs(a.x-b.x)<(n(a.width)+n(b.width))/2&&Math.abs(a.y-b.y)<(n(a.height)+n(b.height))/2;
+class Actor{
+ constructor(entry,opt){this.entry=entry;this.control=opt.control||{held:{}};this.options=opt;this.bridge={};this.metrics={total:0,hits:0,chain:0,longest:0,last:null,popups:[]};this.native=!entry.doc.actions.some(a=>/^(m1|[1-5])$/.test(a.trigger)&&a.keys.length);if(this.native){this.world=new KayackRuntime.World(entry.model,{action:'Idle',frames:Infinity,facing:opt.facing,stats:entry.doc.initial||{},control:this.control});for(let i=0;i<60;i++)this.world.advance();this.world.owner.x=opt.x||0;this.world.owner.y=opt.y||0;this.world.frame=0;this.world.events=[];this.world.boxes=[];for(const k of ['CD1','CD2','CD3','CD4','CD5','CDM1'])this.world.stats[k]=0;}else this.it=KTimeline.run(entry.doc,entry.model,{...opt,frames:Infinity,bridge:this.bridge,p2:{enabled:false},live:opt.live,control:this.control});}
+ step(t){if(this.native){if(!this.options.live){const a=this.entry.doc.actions.find(a=>a.id===this.options.action),trigger=a?.trigger;this.control.held=trigger==='walk'?{right:true}:trigger==='m1'?{m1:this.options.hold!==false||t===0}:t===0&&trigger?{[trigger]:true}:{};}const r=this.world.advance();this.frame=r.frame;this.frame.action=this.options.action||'Idle';Object.assign(this.bridge,{owner:this.world.owner,stats:this.world.stats,status:this.world.status,boxes:r.boxes});}else this.frame=this.it.next().value;return this.frame;}
+ get state(){return this.bridge;}
+}
+class Duel{
+ constructor(p1,p2,opt={}){this.opt=opt;this.tick=0;this.pending=[];this.scripted=[];this.pairs=new Set();this.sparks=[];this.events=[];this.seed=24681357;this.controls=[opt.control||{held:{}},opt.control2||{held:{}}];this.actors=[new Actor(p1,{...opt,cameraTarget:()=>this.actors?.[1]?.state.owner||{x:opt.x??110,y:opt.y||0},control:this.controls[0],live:!!opt.live,action:opt.action,facing:opt.facing||1,x:0,y:0}),new Actor(p2,{live:true,control:this.controls[1],action:'Idle',facing:-1,x:opt.x??110,y:opt.y||0})];}
+ random(){this.seed=(Math.imul(this.seed,1664525)+1013904223)>>>0;return this.seed/4294967296;}
+ scheduled(){if(this.opt.live)return;const held={};for(const e of this.opt.inputs||[])if(this.tick>=n(e.frame)&&this.tick<n(e.frame)+Math.max(1,e.hold?n(e.duration):1))held[e.input]=true;this.controls[1].held=held;}
+ resolve(){const t=this.tick,[a,b]=this.actors;
+ // Both hitboxes register a clash before any entity damage is resolved.
+ for(const x of a.state.boxes.filter(v=>alive(v,t)))for(const y of b.state.boxes.filter(v=>alive(v,t))){if(x.clashUntil>t||y.clashUntil>t||!overlap(x,y))continue;const pair=x.id+'|'+y.id;if(this.pairs.has(pair))continue;this.pairs.add(pair);a.state.stats.Clashed=b.state.stats.Clashed=1;for(const [box,victim]of [[x,b],[y,a]]){box.clashUntil=t+2;if(!truth(box.unbreakable))this.pending.push({at:t+2,box,victim});}this.sparks.push({tick:t,x:(x.x+y.x)/2,y:(x.y+y.y)/2});this.events.push({tick:t,kind:'clash'});}
+ for(const p of this.pending.filter(p=>p.at===t)){const s=p.victim.state.stats;s.XV=-(n(s.LR)<0?-1:1)*(Math.abs(n(s.XV))*1.25+5);p.box.dead=true;if(p.box.grab){s.MX='null';s.MY='null';}}
+ this.pending=this.pending.filter(p=>p.at>t);
+ for(const [attacker,victim,ai,vi]of [[a,b,0,1],[b,a,1,0]])for(const box of attacker.state.boxes){if(!alive(box,t)||box.clashUntil>t)continue;const o=victim.state.owner,s=victim.state.stats,as=attacker.state.stats,st=victim.state.status;if(box.grabbed){s.MX=box.x+n(box.grabX)*(n(as.LR)<0?-1:1);s.MY=box.y+n(box.grabY);continue;}if(box.hit||n(box.weight??1)<=0||!overlap(box,{...o,width:30,height:30}))continue;box.hit=true;
+ // An evade consumes this hitbox's target budget, as it does in Monolith.
+ if(n(s.Evasive)>this.random()*100){s.Evaded='True';continue;}
+ const resist={slash:'SDef',pierce:'PDef',blunt:'BDef'}[box.type],def=n(s.Def??1)+n(s[resist]),damage=Math.round(n(box.damage)*def*(1+.1*n(st.Fragile))*10)/10;
+ s.HP=n(s.HP)-damage;s.Stagger=n(s.Stagger)-n(box.stagger);s.Stun=Math.max(n(s.Stun),n(box.stun));s.XV=n(box.xv)*(n(as.LR)<0?-1:1)*(1-n(s.XVd??.8))/.2;s.YV=n(box.yv);s.Hitted='P'+(ai+1);as.Landed='P'+(vi+1);as.SP=n(as.SP)+n(box.sp);for(const v of box.applies||[])st[v.key]=n(st[v.key])+n(v.value);for(const v of box.gains||[])attacker.state.status[v.key]=n(attacker.state.status[v.key])+n(v.value);if(box.grab){box.grabbed=true;s.MX=box.x+n(box.grabX)*(n(as.LR)<0?-1:1);s.MY=box.y+n(box.grabY);}
+ const m=victim.metrics;m.total=Math.round((m.total+damage)*10)/10;m.hits++;m.last={tick:t,damage,stun:n(box.stun),xv:s.XV,yv:s.YV,type:box.type,grab:!!box.grab};m.popups.push({tick:t,x:o.x,y:o.y+30,damage});for(const text of (box.sounds?.length?box.sounds:[box.sound]).filter(Boolean))this.events.push({tick:t,kind:'sound',text,library:'hitbox'});
+ }
+ for(const actor of this.actors){const m=actor.metrics;m.chain=n(actor.state.stats.Stun)>0?m.chain+1:0;m.longest=Math.max(m.longest,m.chain);m.popups=m.popups.filter(p=>t-p.tick<40);for(const box of actor.state.boxes)if(box.grabbed&&!alive(box,t)){const target=actor===a?b:a;target.state.stats.MX=target.state.stats.MY='null';box.grabbed=false;}}
+ }
+ next(){this.scheduled();const t=this.tick;this.events=[];for(const actor of this.actors)actor.step(t);
+ // Preview-only scripted P2 hitboxes can coexist with its character's attacks.
+ for(const e of this.opt.attacks||[])if(n(e.frame)===t){const a=this.actors[1],s=a.state.stats;const box={...clone(e.data),id:'scheduled:'+t+':'+a.state.boxes.length,start:t,ox:n(e.data.x),oy:n(e.data.y)};box.x=a.state.owner.x+box.ox*s.LR;box.y=a.state.owner.y+box.oy;this.scripted.push(box);}
+ const actor2=this.actors[1],originalBoxes=actor2.state.boxes;this.scripted=this.scripted.filter(box=>t<n(box.start)+n(box.delay)+n(box.lifetime)*60);for(const box of this.scripted)if(!n(box.attached)){box.x=actor2.state.owner.x+box.ox*n(actor2.state.stats.LR);box.y=actor2.state.owner.y+box.oy;}actor2.state.boxes=[...originalBoxes,...this.scripted];
+ this.resolve();const [a,b]=this.actors,f=clone(a.frame);f.stats=clone(a.state.stats);f.status=clone(a.state.status);f.owner=clone(a.state.owner);f.boxes=clone(a.state.boxes.filter(v=>alive(v,t)&&!(v.clashUntil>t)));f.incomingBoxes=clone(b.state.boxes.filter(v=>alive(v,t)&&!(v.clashUntil>t)));f.opponent={part:{...clone(b.state.owner),role:'P2'},parts:clone(b.frame.parts),stats:clone(b.state.stats),status:clone(b.state.status),...clone(b.metrics),entryId:b.entry.id,skillUI:clone(b.frame.skillUI||null)};f.sounds=[...(a.frame.sounds||[]).map(v=>({...v,actor:0})),...(b.frame.sounds||[]).map(v=>({...v,actor:1,library:v.library||'p2char:'+b.entry.id})),...this.events.filter(e=>e.kind==='sound')];this.sparks=this.sparks.filter(v=>t-v.tick<10);f.sparks=clone(this.sparks);actor2.state.boxes=originalBoxes;this.tick++;return {value:f,done:false};}
+}
+root.KDuel={Duel,Actor,alive,overlap};
+})(typeof window!=='undefined'?window:globalThis);

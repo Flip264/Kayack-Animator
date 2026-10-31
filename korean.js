@@ -2,6 +2,45 @@
 // UI-only localization: never changes serialized keys, asset names or character data.
 (function(){
 const pairs=`
+Enable P2|P2 켜기
+
+Open|열기
+Save|저장
+Export (For Game)|게임용 내보내기
+Workspace|작업 공간
+Open character / game project|캐릭터 / 게임 프로젝트 열기
+Open workspace|작업 공간 열기
+Save current character|현재 캐릭터 저장
+Save whole workspace|전체 작업 공간 저장
+New character|새 캐릭터
+Rename character|캐릭터 이름 바꾸기
+Character name|캐릭터 이름
+Create|만들기
+Rename|이름 바꾸기
+Replace workspace?|작업 공간을 바꿀까요?
+Replace workspace|작업 공간 바꾸기
+Remove character?|캐릭터를 제거할까요?
+Remove|제거
+Make your next character.|다음 캐릭터를 만들어 보세요.
+Create a character, or open a character / workspace to continue.|캐릭터를 새로 만들거나 저장한 캐릭터 / 작업 공간을 여세요.
+Adds characters alongside the ones already in this workspace.|기존 캐릭터를 유지하고 작업 공간에 추가합니다.
+Replaces the current workspace. Save your edits first.|현재 작업 공간을 바꿉니다. 변경 사항을 먼저 저장하세요.
+Save the current workspace before replacing it if you want to keep these edits.|편집 내용을 유지하려면 교체하기 전에 현재 작업 공간을 저장하세요.
+This removes the character from this workspace. Previously downloaded files are kept.|이 작업 공간에서만 캐릭터를 제거합니다. 이전에 다운로드한 파일은 유지됩니다.
+P2 controls|P2 조작 키
+P2 character|P2 캐릭터
+P2 · dummy|P2 · 연습 상대
+P2 input sequence|P2 입력 시퀀스
+P2 uses arrow keys, U for M1, and I O P K L for skills 1–5. Controls apply only in Play mode.|P2 이동은 방향키, 기본 공격은 U, 스킬 1~5는 I O P K L입니다. 플레이 모드에서만 조작할 수 있습니다.
+Inputs are relative to the start of this action. Tap lasts one tick; hold lasts the chosen duration. Requires a P2 character.|이 액션의 시작부터 입력 시점을 계산합니다. 누르기는 1틱, 길게 누르기는 지정한 기간 동안 유지됩니다. P2 캐릭터를 선택해야 합니다.
+＋ P2 input|＋ P2 입력
+Input|입력
+Hold|길게 누르기
+Duration · ticks|유지 시간 · 틱
+Drag playhead|재생 위치 드래그
+motion (old)|motion (기존 방식)
+Add motion (old)|motion (기존 방식) 추가
+
 X Shake · local axis ±|X 흔들림 · 로컬 축 ±
 Y Shake · local axis ±|Y 흔들림 · 로컬 축 ±
 Shake follows the object direction. Set an axis to 0 to stop it.|오브젝트 방향을 따라 흔들립니다. 축 값을 0으로 설정하면 해당 축의 흔들림이 멈춥니다.
@@ -32,6 +71,23 @@ Authored demo · original character preserved.|작성된 데모 · 원본 캐릭
 Perspective grid|원근 격자
 Xmotion · curve|Xmotion · 곡선 보간
 Motion · chase|모션 · 목표 추적
+Random range|무작위 범위
+Minimum|최솟값
+Maximum|최댓값
+Apply range|범위 적용
+Use random range…|무작위 범위 사용…
+Edit random range…|무작위 범위 편집…
+Use fixed value|고정 값 사용
+Random range · right-click to edit|무작위 범위 · 우클릭으로 편집
+Rolls once per action entry and stays stable through the motion curve. Event windows reuse the roll. Structural timing and pivots remain fixed.|액션에 진입할 때 한 번 추첨하고 모션 곡선 전체에서 유지합니다. 이벤트 구간도 같은 값을 사용합니다. 프레임 시점과 회전 중심은 고정 값만 사용합니다.
+Hold movement, jump or a skill key in Play mode. A held skill starts at the next eligible idle/walk tick. Mid-skill movement follows Stun; M1 continuation uses its authored branch conditions.|플레이 모드에서 이동·점프·스킬 키를 누른 채 유지할 수 있습니다. 스킬은 실행 가능한 다음 대기/걷기 틱에 시작합니다. 스킬 도중 이동은 Stun을 따르며, M1 연속 공격은 작성된 분기 조건을 따릅니다.
+Copy all keys here|이 프레임의 모든 키 복사
+Delete all keys here|이 프레임의 모든 키 삭제
+Update game runtime|게임 런타임 업데이트
+Choose game .sb3|게임 .sb3 선택
+Select your game .sb3 to download a copy with Kayack Motion 1.1 embedded. Open that copy in a fresh TurboWarp tab before importing your newly exported character. Assets and game scripts are preserved.|게임 .sb3를 선택하면 Kayack Motion 1.1이 포함된 사본을 다운로드합니다. 새 TurboWarp 탭에서 사본을 연 뒤 새로 내보낸 캐릭터를 가져오세요. 에셋과 게임 스크립트는 유지됩니다.
+Updated game copy downloaded. Open it in a fresh TurboWarp tab.|업데이트된 게임 사본을 다운로드했습니다. 새 TurboWarp 탭에서 여세요.
+Load the included Kayack Motion 1.1 before importing this export. Replace the older extension. Random ranges also require it; fixed-value native-only exports do not.|내보낸 캐릭터를 가져오기 전에 포함된 Kayack Motion 1.1로 이전 확장을 교체하세요. 무작위 범위도 이 확장이 필요합니다. 고정 값만 사용하는 일반 블록 내보내기는 필요하지 않습니다.
 Open character|캐릭터 열기
 Save workspace|작업 저장
 Restore|작업 불러오기
@@ -354,10 +410,13 @@ Uses the included working Lucio scaffold and assets. Authored attacks start empt
 Kayack · click to swap red / blue|Kayack · 클릭하면 빨강/파랑 전환
 FRAME · 60 FPS|프레임 · 60 FPS
 `;const dict=Object.fromEntries(pairs.trim().split('\n').map(s=>{const i=s.indexOf('|');return[s.slice(0,i),s.slice(i+1)];}));
+Object.assign(dict,{'Curve':'곡선','Curve ●':'곡선 ●','Fixed mask UV':'마스크 UV 고정','Show page performance':'웹페이지 성능 표시','voronoi':'보로노이','gradient noise':'그라디언트 노이즈','simple noise':'단순 노이즈','Final Output':'최종 출력','Mesh name':'메시 이름','VFX Studio · particles and shaders':'VFX Studio · 파티클 및 셰이더'});
+Object.assign(dict,{"Drag ports to connect · drag background to pan · wheel to zoom": "포트를 드래그하여 연결 · 배경 드래그로 이동 · 휠로 확대", "Output ●": "출력 ●", "color": "색상", "edgeColor": "가장자리 색상", "texture": "텍스처", "noise": "노이즈", "mask": "마스크", "fixedMask": "마스크 UV 고정", "alphaSource": "알파 소스", "dissolveSource": "디졸브 소스", "blend": "블렌딩", "wrap": "반복 방식", "channel": "채널", "doubleSided": "양면 렌더링", "depthWrite": "깊이 기록", "opacity": "불투명도", "intensity": "밝기", "dissolve": "디졸브", "softness": "부드러움", "edgeWidth": "가장자리 두께", "distortion": "왜곡", "noiseScale": "노이즈 크기", "noiseSpeed": "노이즈 속도", "tileU": "U 반복", "tileV": "V 반복", "offsetU": "U 오프셋", "offsetV": "V 오프셋", "scrollU": "U 스크롤", "scrollV": "V 스크롤", "bloom": "블룸", "bloomThreshold": "블룸 임계값", "bloomRadius": "블룸 반경", "Refresh": "새로 고침", "KAYACK VFX • Material Studio": "KAYACK VFX • 재질 스튜디오", "texture alpha": "텍스처 알파", "luminance": "휘도", "mask texture": "마스크 텍스처", "main texture": "메인 텍스처", "additive": "가산", "clamp": "고정", "repeat": "반복", "constant": "상수", "parameter": "매개변수", "time": "시간", "seed": "시드", "sample": "텍스처 샘플", "add": "더하기", "subtract": "빼기", "multiply": "곱하기", "divide": "나누기", "mix": "혼합", "sine": "사인", "cosine": "코사인", "absolute": "절댓값", "one minus": "1에서 빼기", "power": "거듭제곱", "fraction": "소수부", "floor": "내림", "length": "길이", "normalize": "정규화", "rotate UV": "UV 회전", "tiling offset": "반복 및 오프셋", "vector1": "벡터 1", "vector2": "벡터 2", "vector3": "벡터 3", "vector4": "벡터 4"});
 const originals=new WeakMap(),attrs=new WeakMap();
-function protectedNode(n){return !!n.parentElement?.closest('#actions,#assets,#charName,#actionName,#costumeNames,#soundNames,#keywords,#previewState,#download,input,textarea,script,style,.playerhud');}
+function protectedNode(n){return !!n.parentElement?.closest('#actions,#assets,#charName,#actionName,#costumeNames,#soundNames,#keywords,#previewState,#download,[data-asset-name],input,textarea,script,style,.playerhud');}
+function languageText(s){if(s==='VFX Studio · 파티클 및 셰이더')s='VFX Studio · particles and shaders';const chunks=s.split(' / ');if(chunks.length>1&&/[가-힣]/.test(chunks.at(-1)))return prefs.language==='ko'?chunks.at(-1):chunks.slice(0,-1).join(' / ');return prefs.language==='ko'?translate(s):s;}
 function translate(s){const t=s.trim(),pad=s.match(/^\s*/)[0],end=s.match(/\s*$/)[0];if(dict[t])return pad+dict[t]+end;if(/^[▸▾✓] /.test(t))return pad+t.slice(0,2)+translate(t.slice(2))+end;if(t.startsWith('Curve: '))return pad+'곡선: '+translate(t.slice(7))+end;const patterns=[[/^(\d+) selected$/,'$1개 선택'],[/^Weapon(\d*) · xmotion$/,'무기 $1 · Xmotion'],[/^Coin (\d+)$/,'코인 $1'],[/^All keys at frame (\d+)$/,'$1프레임의 모든 키'],[/^Delete (Weapon\d*) everywhere$/,'$1 전체 삭제'],[/^Delete costume$/,'모양 삭제'],[/^Delete sound$/,'소리 삭제'],[/^Exported (\d+) blocks$/,'$1개 블록 내보냄']];for(const [r,v]of patterns)if(r.test(t))return pad+t.replace(r,v)+end;return s;}
-function apply(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];if(root.nodeType===3)nodes.push(root);else while(w.nextNode())nodes.push(w.currentNode);for(const n of nodes){if(protectedNode(n))continue;let item=originals.get(n);if(!item||n.nodeValue!==item.output)item={source:n.nodeValue};const out=prefs.language==='ko'?translate(item.source):item.source;item.output=out;originals.set(n,item);if(n.nodeValue!==out)n.nodeValue=out;}const elems=root.nodeType===1?[root,...root.querySelectorAll('[title],[placeholder],[aria-label]')]:[];for(const e of elems){if(e.closest('#assets,#actions,#charName,#actionName,#costumeNames,#soundNames,#keywords'))continue;let saved=attrs.get(e)||{};for(const k of ['title','placeholder','aria-label']){if(!e.hasAttribute(k))continue;const v=e.getAttribute(k);if(!saved[k]||saved[k].output!==v)saved[k]={source:v};const out=prefs.language==='ko'?translate(saved[k].source):saved[k].source;saved[k].output=out;if(v!==out)e.setAttribute(k,out);}attrs.set(e,saved);}}
+function apply(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];if(root.nodeType===3)nodes.push(root);else while(w.nextNode())nodes.push(w.currentNode);for(const n of nodes){if(protectedNode(n))continue;let item=originals.get(n);if(!item||n.nodeValue!==item.output)item={source:n.nodeValue};const out=languageText(item.source);item.output=out;originals.set(n,item);if(n.nodeValue!==out)n.nodeValue=out;}const elems=root.nodeType===1?[root,...root.querySelectorAll('[title],[placeholder],[aria-label]')]:[];for(const e of elems){if(e.closest('#assets,#actions,#charName,#actionName,#costumeNames,#soundNames,#keywords'))continue;let saved=attrs.get(e)||{};for(const k of ['title','placeholder','aria-label']){if(!e.hasAttribute(k))continue;const v=e.getAttribute(k);if(!saved[k]||saved[k].output!==v)saved[k]={source:v};const out=languageText(saved[k].source);saved[k].output=out;if(v!==out)e.setAttribute(k,out);}attrs.set(e,saved);}}
 const observer=new MutationObserver(records=>{observer.disconnect();for(const r of records){if(r.type==='characterData')apply(r.target);else if(r.type==='attributes')apply(r.target);else for(const n of r.addedNodes)apply(n);}watch();});
 function watch(){observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['title','placeholder','aria-label']});}
 function language(){document.documentElement.lang=prefs.language==='ko'?'ko':'en';observer.disconnect();apply(document.body);watch();}
